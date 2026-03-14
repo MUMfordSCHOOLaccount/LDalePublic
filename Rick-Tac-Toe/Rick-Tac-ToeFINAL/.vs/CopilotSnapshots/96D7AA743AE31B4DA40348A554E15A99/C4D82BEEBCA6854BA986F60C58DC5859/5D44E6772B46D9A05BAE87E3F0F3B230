@@ -1,0 +1,445 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace CSC240_ProjectTicTacToe_LDM
+{
+    public partial class Form1 : Form
+    {
+        // Game state variables
+        // X = Player 2 (or CPU), O = Player 1
+        private string currentTurn = "O"; // Player 1 (O) starts by default
+        private int turnCount = 0;
+        private bool gameStarted = false; // Track if dice has been rolled
+
+        // Score tracking
+        // X = Player 2/CPU, O = Player 1
+        private int player2Score = 0;  // Player 2 (X)
+        private int player1Score = 0;  // Player 1 (O)
+
+        // CPU mode flag
+        private bool isCPUMode = false;
+
+        // Images for X and O players, and empty squares
+        private Image imageX;  // Player 2 / CPU
+        private Image imageO;  // Player 1
+        private Image imageEmpty;
+
+        public Form1()
+        {
+            InitializeComponent();
+            LoadImages();
+        }
+
+        /// <summary>
+        /// Load images from Resources folder
+        /// </summary>
+        private void LoadImages()
+        {
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string xImagePath = Path.Combine(basePath, "Resources", "PlayerX.jpg");
+            string oImagePath = Path.Combine(basePath, "Resources", "PlayerO.jpg");
+            string bgImagePath = Path.Combine(basePath, "Resources", "Background.jpg");
+            string emptyImagePath = Path.Combine(basePath, "Resources", "EmptySquare.jpg");
+
+            // Load player images and resize to fit buttons (96x96 for 100x100 buttons)
+            if (File.Exists(xImagePath))
+            {
+                Image originalX = Image.FromFile(xImagePath);
+                imageX = new Bitmap(originalX, new Size(96, 96));
+            }
+
+            if (File.Exists(oImagePath))
+            {
+                Image originalO = Image.FromFile(oImagePath);
+                imageO = new Bitmap(originalO, new Size(96, 96));
+            }
+
+            // Load empty square image
+            if (File.Exists(emptyImagePath))
+            {
+                Image originalEmpty = Image.FromFile(emptyImagePath);
+                imageEmpty = new Bitmap(originalEmpty, new Size(96, 96));
+            }
+
+            // Load background image for form
+            if (File.Exists(bgImagePath))
+            {
+                Image bgImage = Image.FromFile(bgImagePath);
+                this.BackgroundImage = new Bitmap(bgImage, this.ClientSize);
+                this.BackgroundImageLayout = ImageLayout.Stretch;
+            }
+
+            // Set empty image on all game buttons initially
+            SetEmptyImagesOnButtons();
+        }
+
+        /// <summary>
+        /// Sets the empty square image on all game buttons
+        /// </summary>
+        private void SetEmptyImagesOnButtons()
+        {
+            if (imageEmpty != null)
+            {
+                foreach (Control c in this.Controls)
+                {
+                    if (c is Button b && b.Name != "btnReset" && b.Name != "btnResetScores" && b.Name != "btnDiceRoll")
+                    {
+                        b.Image = imageEmpty;
+                        b.Text = "";
+                    }
+                }
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // Set default game mode to 2 Players
+            cmbGameMode.SelectedIndex = 0;
+            
+            // Disable game buttons until dice is rolled
+            DisableAllButtons();
+            lblStatus.Text = "Roll Dice to Start!";
+        }
+
+        /// <summary>
+        /// Dice Roll button click handler - determines who goes first
+        /// </summary>
+        private void btnDiceRoll_Click(object sender, EventArgs e)
+        {
+            Random rand = new Random();
+            int player1Roll = rand.Next(1, 7); // Player 1 rolls (1-6)
+            int player2Roll = rand.Next(1, 7); // Player 2/CPU rolls (1-6)
+
+            string player2Name = isCPUMode ? "CPU" : "Player 2";
+
+            // Handle tie - re-roll
+            while (player1Roll == player2Roll)
+            {
+                player1Roll = rand.Next(1, 7);
+                player2Roll = rand.Next(1, 7);
+            }
+
+            string rollResult;
+            if (player1Roll > player2Roll)
+            {
+                currentTurn = "O"; // Player 1 goes first
+                rollResult = $"Player 1 rolled {player1Roll}, {player2Name} rolled {player2Roll}.\nPlayer 1 goes first!";
+                lblStatus.Text = "Player 1's Turn";
+            }
+            else
+            {
+                currentTurn = "X"; // Player 2/CPU goes first
+                rollResult = $"Player 1 rolled {player1Roll}, {player2Name} rolled {player2Roll}.\n{player2Name} goes first!";
+                lblStatus.Text = isCPUMode ? "CPU's Turn" : "Player 2's Turn";
+            }
+
+            MessageBox.Show(rollResult, "🎲 Dice Roll Results");
+
+            // Enable the game
+            gameStarted = true;
+            EnableEmptyButtons();
+
+            // If CPU goes first, start CPU move
+            if (isCPUMode && currentTurn == "X")
+            {
+                lblStatus.Text = "CPU is thinking...";
+                DisableAllButtons();
+                AITimer.Start();
+            }
+        }
+
+        /// <summary>
+        /// Universal click handler for all 9 game buttons
+        /// </summary>
+        private void btn_Click(object sender, EventArgs e)
+        {
+            // Don't allow moves if game hasn't started (dice not rolled)
+            if (!gameStarted)
+            {
+                MessageBox.Show("Please roll the dice first to determine who goes first!", "Roll Dice");
+                return;
+            }
+
+            Button b = (Button)sender;
+
+            // In CPU mode, only allow clicks when it's Player 1's turn (O)
+            if (isCPUMode && currentTurn == "X")
+            {
+                return; // Ignore clicks during CPU's turn
+            }
+
+            // Check if button is empty (has empty image or no tag set)
+            bool isEmpty = (b.Image == imageEmpty || b.Image == null) && b.Tag == null;
+            if (isEmpty)
+            {
+                MakeMove(b);
+
+                // If game continues and it's CPU mode, start the thinking delay
+                // CPU is Player 2 (X), so trigger when it becomes X's turn
+                if (isCPUMode && currentTurn == "X" && turnCount < 9 && gameStarted)
+                {
+                    lblStatus.Text = "CPU is thinking...";
+                    DisableAllButtons();
+                    AITimer.Start(); // Starts the 1-second delay
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles making a move on the board
+        /// </summary>
+        private void MakeMove(Button b)
+        {
+            // Use images and Tag property for tracking (no visible X/O text needed)
+            // X = Player 2/CPU, O = Player 1
+            if (currentTurn == "X")
+            {
+                b.Image = imageX;
+                b.Tag = "X"; // Use Tag for win detection (invisible)
+            }
+            else // O = Player 1
+            {
+                b.Image = imageO;
+                b.Tag = "O"; // Use Tag for win detection (invisible)
+            }
+
+            turnCount++;
+
+            if (CheckForWinner())
+            {
+                UpdateScores();
+                string winnerName = GetCurrentPlayerName();
+                MessageBox.Show($"Congratulations! {winnerName} wins!", "Game Over");
+                ResetBoard();
+                return;
+            }
+
+            if (turnCount == 9)
+            {
+                MessageBox.Show("It's a draw!", "Bummer!");
+                ResetBoard();
+                return;
+            }
+
+            // Switch Turns
+            currentTurn = (currentTurn == "X") ? "O" : "X";
+            
+            // Update status label with appropriate player name
+            lblStatus.Text = GetCurrentPlayerName() + "'s Turn";
+        }
+
+        /// <summary>
+        /// Gets the display name for the current player
+        /// </summary>
+        private string GetCurrentPlayerName()
+        {
+            if (currentTurn == "O")
+            {
+                return "Player 1";
+            }
+            else // X
+            {
+                return isCPUMode ? "CPU" : "Player 2";
+            }
+        }
+
+        /// <summary>
+        /// Updates the score labels when a player wins
+        /// </summary>
+        private void UpdateScores()
+        {
+            // X = Player 2/CPU, O = Player 1
+            if (currentTurn == "X")
+            {
+                player2Score++;
+                string player2Name = isCPUMode ? "CPU" : "Player 2";
+                lblXScore.Text = player2Name + ": " + player2Score;
+            }
+            else
+            {
+                player1Score++;
+                lblOScore.Text = "Player 1: " + player1Score;
+            }
+        }
+
+        /// <summary>
+        /// Checks all possible win conditions (rows, columns, diagonals)
+        /// Uses Tag property to track which player owns each button
+        /// </summary>
+        private bool CheckForWinner()
+        {
+            // Helper to get tag as string
+            string GetTag(Button b) => b.Tag?.ToString() ?? "";
+
+            // Horizontal Rows
+            if (GetTag(button1) == GetTag(button2) && GetTag(button2) == GetTag(button3) && GetTag(button1) != "")
+            { HighlightButtons(button1, button2, button3); return true; }
+            if (GetTag(button4) == GetTag(button5) && GetTag(button5) == GetTag(button6) && GetTag(button4) != "")
+            { HighlightButtons(button4, button5, button6); return true; }
+            if (GetTag(button7) == GetTag(button8) && GetTag(button8) == GetTag(button9) && GetTag(button7) != "")
+            { HighlightButtons(button7, button8, button9); return true; }
+
+            // Vertical Columns
+            if (GetTag(button1) == GetTag(button4) && GetTag(button4) == GetTag(button7) && GetTag(button1) != "")
+            { HighlightButtons(button1, button4, button7); return true; }
+            if (GetTag(button2) == GetTag(button5) && GetTag(button5) == GetTag(button8) && GetTag(button2) != "")
+            { HighlightButtons(button2, button5, button8); return true; }
+            if (GetTag(button3) == GetTag(button6) && GetTag(button6) == GetTag(button9) && GetTag(button3) != "")
+            { HighlightButtons(button3, button6, button9); return true; }
+
+            // Diagonals
+            if (GetTag(button1) == GetTag(button5) && GetTag(button5) == GetTag(button9) && GetTag(button1) != "")
+            { HighlightButtons(button1, button5, button9); return true; }
+            if (GetTag(button3) == GetTag(button5) && GetTag(button5) == GetTag(button7) && GetTag(button3) != "")
+            { HighlightButtons(button3, button5, button7); return true; }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Highlights the winning buttons with green color
+        /// </summary>
+        private void HighlightButtons(Button b1, Button b2, Button b3)
+        {
+            b1.BackColor = Color.LightGreen;
+            b2.BackColor = Color.LightGreen;
+            b3.BackColor = Color.LightGreen;
+        }
+
+        /// <summary>
+        /// Resets the board for a new game (scores persist)
+        /// </summary>
+        private void ResetBoard()
+        {
+            // Reset game state variables
+            turnCount = 0;
+            gameStarted = false; // Require dice roll for new game
+            currentTurn = "O"; // Default to Player 1, but dice roll will determine
+
+            lblStatus.Text = "Roll Dice to Start!";
+
+            // Loop through all controls on the form
+            foreach (Control c in this.Controls)
+            {
+                // Only target the game grid buttons
+                if (c is Button b && b.Name != "btnReset" && b.Name != "btnResetScores" && b.Name != "btnDiceRoll")
+                {
+                    b.Enabled = false;  // Disable until dice is rolled
+                    b.Tag = null;       // Clear the player tag
+                    b.Image = imageEmpty; // Set empty square image (or null if not loaded)
+                    b.BackColor = SystemColors.Control; // Reset to original color
+                }
+            }
+        }
+
+        /// <summary>
+        /// Disables all game buttons (used during CPU thinking)
+        /// </summary>
+        private void DisableAllButtons()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is Button b && b.Name != "btnReset" && b.Name != "btnResetScores" && b.Name != "btnDiceRoll")
+                {
+                    b.Enabled = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Enables all game buttons that are still empty
+        /// </summary>
+        private void EnableEmptyButtons()
+        {
+            foreach (Control c in this.Controls)
+            {
+                // Check for no Tag (empty) AND empty image (or no image)
+                // Exclude non-game buttons
+                bool isEmpty = (c is Button b && b.Name != "btnReset" && b.Name != "btnResetScores" && b.Name != "btnDiceRoll"
+                    && b.Tag == null && (b.Image == imageEmpty || b.Image == null));
+                if (isEmpty)
+                {
+                    ((Button)c).Enabled = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// New Game button click handler
+        /// </summary>
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            AITimer.Stop(); // Stop CPU timer if running
+            ResetBoard();
+        }
+
+        /// <summary>
+        /// Reset Scores button click handler
+        /// </summary>
+        private void btnResetScores_Click(object sender, EventArgs e)
+        {
+            AITimer.Stop(); // Stop CPU timer if running
+            player2Score = 0;
+            player1Score = 0;
+            string player2Name = isCPUMode ? "CPU" : "Player 2";
+            lblXScore.Text = player2Name + ": 0";
+            lblOScore.Text = "Player 1: 0";
+            ResetBoard(); // Also clear the current grid
+        }
+
+        /// <summary>
+        /// Game mode selection changed
+        /// </summary>
+        private void cmbGameMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AITimer.Stop(); // Stop CPU timer if running
+            isCPUMode = (cmbGameMode.SelectedIndex == 1); // "vs CPU" is index 1
+
+            // Update score labels with appropriate names
+            string player2Name = isCPUMode ? "CPU" : "Player 2";
+            lblXScore.Text = player2Name + ": " + player2Score;
+            lblOScore.Text = "Player 1: " + player1Score;
+
+            ResetBoard(); // Reset the board when mode changes
+        }
+
+        /// <summary>
+        /// CPU Timer tick - makes the CPU move after a delay
+        /// </summary>
+        private void AITimer_Tick(object sender, EventArgs e)
+        {
+            AITimer.Stop(); // Stop timer so it only runs once per turn
+
+            // Find all empty buttons (no Tag AND has empty image or no image)
+            List<Button> availableButtons = new List<Button>();
+            foreach (Control c in this.Controls)
+            {
+                if (c is Button b && b.Tag == null && (b.Image == imageEmpty || b.Image == null) 
+                    && b.Name != "btnReset" && b.Name != "btnResetScores" && b.Name != "btnDiceRoll")
+                {
+                    availableButtons.Add(b);
+                }
+            }
+
+            // Pick random and move
+            if (availableButtons.Count > 0)
+            {
+                Random rand = new Random();
+                Button selection = availableButtons[rand.Next(availableButtons.Count)];
+                selection.Enabled = true; // Enable before making move
+                MakeMove(selection);
+            }
+
+            // Re-enable buttons for player's turn
+            EnableEmptyButtons();
+        }
+    }
+}

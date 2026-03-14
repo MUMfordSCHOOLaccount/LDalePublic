@@ -1,0 +1,14 @@
+D:\SCHOOL\SCHOOL_FILES\Winter 2026\Visual Programming\Week10\CSC240-ProjectTicTacToe-LDM\obj\Release\CSC240-ProjectTicTacToe-LDM.csproj.AssemblyReference.cache
+D:\SCHOOL\SCHOOL_FILES\Winter 2026\Visual Programming\Week10\CSC240-ProjectTicTacToe-LDM\obj\Release\CSC240_ProjectTicTacToe_LDM.ExitScreen.resources
+D:\SCHOOL\SCHOOL_FILES\Winter 2026\Visual Programming\Week10\CSC240-ProjectTicTacToe-LDM\obj\Release\CSC240_ProjectTicTacToe_LDM.GameOverScreen.resources
+D:\SCHOOL\SCHOOL_FILES\Winter 2026\Visual Programming\Week10\CSC240-ProjectTicTacToe-LDM\obj\Release\CSC240_ProjectTicTacToe_LDM.LeaderboardForm.resources
+D:\SCHOOL\SCHOOL_FILES\Winter 2026\Visual Programming\Week10\CSC240-ProjectTicTacToe-LDM\obj\Release\CSC240_ProjectTicTacToe_LDM.Properties.Resources.resources
+D:\SCHOOL\SCHOOL_FILES\Winter 2026\Visual Programming\Week10\CSC240-ProjectTicTacToe-LDM\obj\Release\CSC240_ProjectTicTacToe_LDM.StartScreen.resources
+D:\SCHOOL\SCHOOL_FILES\Winter 2026\Visual Programming\Week10\CSC240-ProjectTicTacToe-LDM\obj\Release\CSC240-ProjectTicTacToe-LDM.csproj.GenerateResource.cache
+D:\SCHOOL\SCHOOL_FILES\Winter 2026\Visual Programming\Week10\CSC240-ProjectTicTacToe-LDM\obj\Release\CSC240-ProjectTicTacToe-LDM.csproj.CoreCompileInputs.cache
+D:\SCHOOL\SCHOOL_FILES\Winter 2026\Visual Programming\Week10\CSC240-ProjectTicTacToe-LDM\obj\Release\RickTacToe.exe
+D:\SCHOOL\SCHOOL_FILES\Winter 2026\Visual Programming\Week10\CSC240-ProjectTicTacToe-LDM\obj\Release\RickTacToe.pdb
+D:\SCHOOL\SCHOOL_FILES\Winter 2026\Visual Programming\Week10\CSC240-ProjectTicTacToe-LDM\RickTacToe.exe.config
+D:\SCHOOL\SCHOOL_FILES\Winter 2026\Visual Programming\Week10\CSC240-ProjectTicTacToe-LDM\RickTacToe.exe
+D:\SCHOOL\SCHOOL_FILES\Winter 2026\Visual Programming\Week10\CSC240-ProjectTicTacToe-LDM\RickTacToe.pdb
+D:\SCHOOL\SCHOOL_FILES\Winter 2026\Visual Programming\Week10\CSC240-ProjectTicTacToe-LDM\obj\Release\RickTacToe.exe.config
