@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Me - Missy Art Gallery</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="icon" href="../Book/MissyCutOut.png">
+  <style>
+    /* Grayscale filter for locked mode (scoped to site-grayscale to avoid applying to fixed UI elements like Missy) */
+    body.site-grayscale .aboutme-img-container {
+      filter: none; /* background handled via image; keep content dim by adjusting opacity if needed */
+    }
+    /* Leave navigation highlights in grayscale mode able to pop */
+    body.site-grayscale .main-nav a:hover,
+    body.site-grayscale .main-nav a:focus,
+    body.site-grayscale .main-nav a:active {
+      filter: none !important;
+      color: #e6007a !important;
+    }
+    body { 
+      margin: 0; 
+      padding: 0; 
+      min-height: 100vh; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: flex-start; 
+      transition: filter 0.4s; 
+    }
+    /* Make the about image render via an absolutely-positioned <img> to preserve aspect ratio */
+    .aboutme-img-container {
+      width: 100vw;
+      display: block;
+      margin: 0 auto 2.5rem auto;
+      overflow: hidden; /* hide horizontal overflow */
+      height: 400vh; /* 4 × 100vh so each scroll reveals a new quarter */
+      padding: 0;
+      position: relative; /* for absolutely-positioned inner image */
+      border-radius: 1.2rem 1.2rem 0 0;
+      box-shadow: 0 4px 32px #0003;
+      transition: background-position 0.35s ease, transform 0.35s ease;
+    }
+
+    /* The inner image preserves aspect ratio: height spans 400vh, width auto but capped at viewport width */
+    .aboutme-bg-img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 400vh; /* span 4 viewports tall */
+      width: auto;
+      max-width: 100vw; /* never wider than viewport */
+      object-fit: contain;
+      object-position: left top;
+      pointer-events: none;
+      display: block;
+    }
+    /* Responsive adjustments for the inner image */
+    @media (max-width: 900px) {
+      .aboutme-bg-img {
+        /* slightly reduced for medium screens to keep quarters visible */
+        height: 360vh;
+        border-radius: 0.7rem 0.7rem 0 0;
+      }
+    }
+    @media (max-width: 420px) {
+      .aboutme-bg-img {
+        /* compact for narrow phones */
+        height: 320vh;
+      }
+    }
+    .back-to-top {
+      position: fixed;
+      right: 2vw;
+      bottom: 2vw;
+      background: #e6007a;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      font-size: 2rem;
+      box-shadow: 0 2px 12px #0003;
+      cursor: pointer;
+      display: none;
+      z-index: 2000;
+      transition: background 0.2s;
+    }
+    .back-to-top:hover {
+      background: #7c3aed;
+    }
+  
+    /* Hide the page progress dots for this page (user requested) */
+    #progressDots { display: none !important; }
+
+    /* Ensure the site-wide background (gallery background) is visible on this page */
+    body.page-bg::before {
+      background-image: url('/Gallery/gallery-background.png');
+      background-position: center center;
+      background-size: 100% 100%;
+    }
+  </style>
+</head>
+<body class="page-bg">
+  <h1 class="site-title" id="animatedTitle"><span id="wordMissy">Missy</span> <span id="wordArt">Art</span> <span id="wordGallery">Gallery</span></h1>
+  <nav class="main-nav">
+    <a href="../index.html">Home</a>
+    <a href="../gallery.html">Gallery</a>
+    <a href="../contact.html" id="contactLink">Contact</a>
+  </nav>
+  <div class="aboutme-img-container" role="img" aria-label="About me background image">
+    <img src="Aboutme500.jpg" alt="About Missy" class="aboutme-bg-img" />
+  </div>
+  <script src="../core.js"></script>
+  <script>
+    // Ensure grayscale applied and size about image container to 4×viewport
+    document.addEventListener('DOMContentLoaded', function(){
+      try{ if(!document.body.classList.contains('fullcolor')) document.body.classList.add('site-grayscale'); }catch(e){}
+      try{
+        var container = document.querySelector('.aboutme-img-container');
+        if(container){
+          function sizeContainer(){ container.style.height = (window.innerHeight * 4) + 'px'; document.body.style.marginBottom = '0'; }
+          sizeContainer(); window.addEventListener('resize', sizeContainer);
+        }
+      }catch(e){}
+      // mark about visited for unlock logic
+      try { localStorage.setItem('visited_about', '1'); } catch(e) {}
+    });
+  </script>
+
+<!-- Debug loader: if ?debug=1 or localStorage.debug=1 then load assets/logger.js and randomizer -->
+<script>
+  (function(){
+    const isDebug = /[?&]debug=1/.test(location.search) || localStorage.getItem('debug') === '1';
+    if(!isDebug) return;
+    const s1 = document.createElement('script'); s1.src = '../assets/logger.js'; s1.defer = true; document.head.appendChild(s1);
+    const s2 = document.createElement('script'); s2.src = '../assets/test-item-randomizer.browser.js'; s2.defer = true; document.head.appendChild(s2);
+    s1.onload = function(){ try{ if(window.Logger && typeof window.Logger.init === 'function') window.Logger.init({autoCapture:false, writeToFile:false}); window.Logger.log('AboutMe debug enabled'); }catch(e){} };
+    s2.onload = function(){ try{ setTimeout(function(){ const missy = document.querySelector('#missyCornerImg, #missyImg, .missy-corner-img, .missy-img'); if(missy && window.Logger){ missy.addEventListener('mouseenter', ()=>window.Logger.log('missy:mouseenter')); missy.addEventListener('click', ()=>window.Logger.log('missy:click')); missy.addEventListener('touchstart', ()=>window.Logger.log('missy:touchstart')); } if(window._randomizer && window.Logger) window.Logger.log('Randomizer ready: _randomizer.pick("weapons",3)'); },300); }catch(e){} };
+  })();
+</script>
+
+<!-- Per-page Missy widget removed — canonical Missy is provided by core.js -->
+</body>
+</html>
