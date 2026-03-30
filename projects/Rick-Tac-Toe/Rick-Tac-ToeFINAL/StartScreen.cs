@@ -1,0 +1,245 @@
+using System;
+using System;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
+
+namespace CSC240_ProjectTicTacToe_LDM
+{
+    public partial class StartScreen : Form
+    {
+        private bool diceRolled = false;
+        private Image titleImage;
+        private Image startButtonImage;
+
+        public StartScreen()
+        {
+            InitializeComponent();
+        }
+
+        private void StartScreen_Load(object sender, EventArgs e)
+        {
+            // Initialize game data
+            GameData.Initialize();
+
+            // Load images
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string welcomeImagePath = Path.Combine(basePath, "Resources", "Welcome.jpg");
+            string mainMenuImagePath = Path.Combine(basePath, "Resources", "MainMenu.jpg");
+            string startButtonPath = Path.Combine(basePath, "Resources", "StartButton.jpg");
+
+            // Load welcome image for the initial screen
+            if (File.Exists(welcomeImagePath))
+            {
+                titleImage = Image.FromFile(welcomeImagePath);
+                picTitleImage.Image = titleImage;
+            }
+            else
+            {
+                // Placeholder - show text if no image
+                picTitleImage.BackColor = Color.DarkGreen;
+            }
+
+            // Load main menu image as background for player setup panel
+            if (File.Exists(mainMenuImagePath))
+            {
+                pnlPlayerSetup.BackgroundImage = Image.FromFile(mainMenuImagePath);
+                pnlPlayerSetup.BackgroundImageLayout = ImageLayout.Stretch;
+            }
+
+            // Hide title label since MainMenu.jpg has the title
+            lblTitle.Visible = false;
+
+            // Load start button image
+            if (File.Exists(startButtonPath))
+            {
+                startButtonImage = Image.FromFile(startButtonPath);
+                btnStartGame.Image = startButtonImage;
+                btnStartGame.ImageAlign = ContentAlignment.MiddleCenter;
+                btnStartGame.Text = ""; // Remove text since we have an image
+            }
+
+            // Start the 20-second timer to show player setup
+            titleTimer.Start();
+
+            // Allow clicking the title image to skip to setup
+            picTitleImage.Click += (s, ev) => ShowPlayerSetup();
+        }
+
+        private void titleTimer_Tick(object sender, EventArgs e)
+        {
+            titleTimer.Stop();
+            ShowPlayerSetup();
+        }
+
+        private void ShowPlayerSetup()
+        {
+            titleTimer.Stop();
+            picTitleImage.Visible = false;
+            pnlPlayerSetup.Visible = true;
+            pnlPlayerSetup.BringToFront();
+        }
+
+        private void rdo1Player_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rdo1Player.Checked)
+            {
+                // VS CPU mode - hide player 2 name
+                lblPlayer2Name.Visible = false;
+                txtPlayer2Name.Visible = false;
+                GameData.IsCPUMode = true;
+            }
+            ResetDiceRoll();
+        }
+
+        private void rdo2Player_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rdo2Player.Checked)
+            {
+                // 2 Player mode - show player 2 name
+                lblPlayer2Name.Visible = true;
+                txtPlayer2Name.Visible = true;
+                GameData.IsCPUMode = false;
+            }
+            ResetDiceRoll();
+        }
+
+        private void ResetDiceRoll()
+        {
+            diceRolled = false;
+            btnStartGame.Enabled = false;
+            lblDiceResult.Text = "";
+        }
+
+        private void btnRollDice_Click(object sender, EventArgs e)
+        {
+            // Get player names
+            string player1Name = string.IsNullOrWhiteSpace(txtPlayer1Name.Text) ? "Player 1" : txtPlayer1Name.Text.Trim();
+            string player2Name;
+
+            if (rdo1Player.Checked)
+            {
+                player2Name = "CPU";
+            }
+            else
+            {
+                player2Name = string.IsNullOrWhiteSpace(txtPlayer2Name.Text) ? "Player 2" : txtPlayer2Name.Text.Trim();
+            }
+
+            // Store names in GameData
+            GameData.Player1Name = player1Name;
+            GameData.Player2Name = player2Name;
+            GameData.IsCPUMode = rdo1Player.Checked;
+
+            // Initialize player stats
+            GameData.Player1Stats = new PlayerStats(player1Name);
+            if (GameData.IsCPUMode)
+            {
+                GameData.CPUStats = new PlayerStats("CPU");
+            }
+            else
+            {
+                GameData.Player2Stats = new PlayerStats(player2Name);
+            }
+
+            // Roll dice
+            Random rand = new Random();
+            int player1Roll = rand.Next(1, 7);
+            int player2Roll = rand.Next(1, 7);
+
+            // Handle ties
+            while (player1Roll == player2Roll)
+            {
+                player1Roll = rand.Next(1, 7);
+                player2Roll = rand.Next(1, 7);
+            }
+
+            string result;
+            if (player1Roll > player2Roll)
+            {
+                GameData.CurrentStartingPlayer = "O"; // Player 1 (O) goes first
+                result = $"{player1Name} rolled {player1Roll}, {player2Name} rolled {player2Roll}\n{player1Name} goes first!";
+            }
+            else
+            {
+                GameData.CurrentStartingPlayer = "X"; // Player 2/CPU (X) goes first
+                result = $"{player1Name} rolled {player1Roll}, {player2Name} rolled {player2Roll}\n{player2Name} goes first!";
+            }
+
+            lblDiceResult.Text = result;
+            diceRolled = true;
+            btnStartGame.Enabled = true;
+            // Button uses image, no need to change BackColor
+        }
+
+        private void btnViewLeaderboard_Click(object sender, EventArgs e)
+        {
+            // Toggle leaderboard panel visibility
+            pnlLeaderboard.Visible = !pnlLeaderboard.Visible;
+            
+            if (pnlLeaderboard.Visible)
+            {
+                pnlLeaderboard.BringToFront();
+                LoadLeaderboard();
+                btnViewLeaderboard.Text = "Hide Leaderboard";
+            }
+            else
+            {
+                btnViewLeaderboard.Text = "View Leaderboard";
+            }
+        }
+
+        private void btnCloseLeaderboard_Click(object sender, EventArgs e)
+        {
+            pnlLeaderboard.Visible = false;
+            btnViewLeaderboard.Text = "View Leaderboard";
+        }
+
+        private void LoadLeaderboard()
+        {
+            dgvLeaderboard.Rows.Clear();
+
+            // Style the DataGridView
+            dgvLeaderboard.EnableHeadersVisualStyles = false;
+            dgvLeaderboard.ColumnHeadersDefaultCellStyle.BackColor = Color.DarkSlateGray;
+            dgvLeaderboard.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dgvLeaderboard.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+            dgvLeaderboard.DefaultCellStyle.BackColor = Color.FromArgb(40, 40, 60);
+            dgvLeaderboard.DefaultCellStyle.ForeColor = Color.White;
+            dgvLeaderboard.DefaultCellStyle.SelectionBackColor = Color.DarkGreen;
+            dgvLeaderboard.DefaultCellStyle.Font = new Font("Segoe UI", 9);
+
+            var leaderboard = GameData.GetLeaderboard();
+            int rank = 1;
+
+            foreach (var player in leaderboard)
+            {
+                // Use rank number for all positions
+                string rankDisplay = rank.ToString();
+
+                dgvLeaderboard.Rows.Add(rankDisplay, player.Name, player.Wins, player.Losses);
+                rank++;
+            }
+
+            if (leaderboard.Count == 0)
+            {
+                dgvLeaderboard.Rows.Add("-", "No players yet", "-", "-");
+            }
+        }
+
+        private void btnStartGame_Click(object sender, EventArgs e)
+        {
+            if (!diceRolled)
+            {
+                MessageBox.Show("Please roll the dice first!", "Roll Dice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Hide this form and show the game
+            this.Hide();
+            Form1 gameForm = new Form1();
+            gameForm.FormClosed += (s, args) => this.Close(); // Close start screen when game closes
+            gameForm.Show();
+        }
+    }
+}

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>My personal web page for class CSC230-Web Design</title>
+    
+    <style>
+        body {
+            background-color: #4a90e2;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .header-section {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .header-section img {
+            width: 150px;
+            height: auto;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+
+        .header-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-info h1 {
+            margin: 0 0 10px 0;
+        }
+
+        .header-info h3,
+        .header-info p {
+            margin: 5px 0;
+        }
+
+        a {
+            color: #ffeb3b;
+        }
+
+        a:hover {
+            color: #ffd700;
+        }
+
+        section {
+            max-width: 900px;
+        }
+
+        article ol {
+            list-style: none;
+            padding: 0;
+            counter-reset: assignment-counter;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        article ol > li {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            counter-increment: assignment-counter;
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            transition: transform 0.3s, background-color 0.3s;
+            border: 2px solid rgba(255, 235, 59, 0.3);
+        }
+
+        article ol > li:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 235, 59, 0.6);
+        }
+
+        article ol > li::before {
+            content: "Assignment " counter(assignment-counter);
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #ffeb3b;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 235, 59, 0.3);
+        }
+
+        article ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        article ul li {
+            padding: 6px 0;
+            font-size: 0.9em;
+            transition: padding-left 0.3s;
+        }
+
+        article ul li:hover {
+            padding-left: 5px;
+        }
+
+        article ul li::before {
+            content: "→ ";
+            color: #ffeb3b;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        article ul li a {
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        article ul li a:hover {
+            color: #ffd700;
+            text-decoration: underline;
+            text-shadow: 0 0 5px rgba(255, 235, 59, 0.5);
+        }
+    </style>
+
+</head>
+    <body>
+        <header>
+        <h1>My personal web page for class CSC230-Web Design</h1>
+        </header>
+        <nav>
+
+        </nav>
+        <aside> 
+
+        </aside>
+            <main>
+                <div class="header-section">
+                    <img src="LarryMumford1.jpg" alt="A picture of Larry Mumford">
+                    <div class="header-info">
+                        <h1>Larry Mumford</h1>
+                        <h3>Major at Sullivan: Information Technology</h3>
+                        <p>Years until graduation: 1 year</p>
+                        <p>Email:
+                            <a href="mailto:Lmumfo3853@my.sullivan.edu">Lmumfo3853@my.sullivan.edu</a>
+                        </p>
+                    </div>
+                </div>
+ 
+                <section>
+                    <article>
+                        <ol> 
+                            <li>            
+                                Assignment 1 - HTML01, Tutorial 1
+                                <ul>
+                                    <li>
+                                        <a href="../assn01/tutorial/ct_about.html">Curbside Thai</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                Assignment 2 - HTML02
+                                <ul>
+                                    <li>
+                                        <a href="../assn02/index.html">Index Page</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                Assignment 3 - HTML03, Review
+                                <ul>
+                                    <li>
+                                        <a href="../assn03/review/mp_index.html">Mobile Panini - Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="../assn03/review/mp_menu.html">Mobile Panini - Menu</a>
+                                    </li>
+                                    <li>
+                                        <a href="../assn03/review/mp_events.html">Mobile Panini - Events</a>
+                                    </li>
+                                    <li>
+                                        <a href="../assn03/review/mp_catering.html">Mobile Panini - Catering</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                Assignment 4 - HTML04, Case 1
+                                <ul>
+                                    <li>
+                                        <a href="../assn04/case1/jtc_index.html">J-Tip Consulting - Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="../assn04/case1/jtc_services.html">J-Tip Consulting - Services</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                Assignment 5 - HTML05, Tutorial
+                                <ul>
+                                    <li>
+                                        <a href="../assn05/tutorial/tss_home.html">Tri and Succeed Sports - Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="../assn05/tutorial/tss_run.html">Tri and Succeed Sports - Running</a>
+                                    </li>
+                                    <li>
+                                        <a href="../assn05/tutorial/tss_bike.html">Tri and Succeed Sports - Biking</a>
+                                    </li>
+                                    <li>
+                                        <a href="../assn05/tutorial/tss_swim.html">Tri and Succeed Sports - Swimming</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                Assignment 6 - HTML06, Tutorial
+                                <ul>
+                                    <li>
+                                        <a href="../assn06/tutorial/pc_home.html">Pandaisia Chocolates - Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="../assn06/tutorial/pc_about.html">Pandaisia Chocolates - About</a>
+                                    </li>
+                                    <li>
+                                        <a href="../assn06/tutorial/pc_info.html">Pandaisia Chocolates - Info</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                Assignment 7 - HTML07
+                                <ul>
+                                    <li>
+                                        <a href="../assn07/case1/sp_home.html">Slate & Pencil Tutoring</a>
+                                    </li>
+                                    <li>
+                                        <a href="../assn07/case3/ss_dday.html">A Soldier's Scrapbook - D-Day</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ol>
+                    
+
+                    </article>        
+    
+                </section>
+       
+            </main>
+
+    </body>
+
+</html>

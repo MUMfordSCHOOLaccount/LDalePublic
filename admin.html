@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SENTRY | ADMIN ACCESS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Outfit:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --matrix-green: #00ff41;
+      --citizen-blue: #00d2ff;
+      --bg-dark: #020617;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--matrix-green);
+      font-family: 'Fira Code', monospace;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    #matrix-canvas {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: -1;
+      opacity: 0.2;
+    }
+
+    .admin-hud {
+      display: grid;
+      grid-template-columns: 350px 1fr 350px;
+      height: 100vh;
+      padding: 40px;
+      gap: 20px;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(0, 255, 65, 0.2);
+      border-radius: 12px;
+      padding: 24px;
+      backdrop-filter: blur(8px);
+      box-shadow: inset 0 0 20px rgba(0, 255, 65, 0.05);
+    }
+
+    .hud-header {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid var(--citizen-blue);
+      padding: 15px 30px;
+      border-radius: 99px;
+      margin-bottom: 20px;
+      background: rgba(0, 210, 255, 0.05);
+      color: var(--citizen-blue);
+    }
+
+    h1, h2, h3 { font-family: 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
+
+    .ship-status {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .status-item {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0, 255, 65, 0.1);
+      padding-bottom: 8px;
+    }
+
+    .citizen-blue { color: var(--citizen-blue); }
+
+    .main-terminal {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .log-content {
+      flex: 1;
+      overflow-y: auto;
+      font-size: 0.9rem;
+      color: var(--matrix-green);
+      line-height: 1.4;
+    }
+
+    .log-line { margin-bottom: 10px; }
+    .log-line span { opacity: 0.6; margin-right: 10px; }
+
+    .star-citizen-badge {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(0, 210, 255, 0.05);
+      border-radius: 8px;
+      border: 1px dashed var(--citizen-blue);
+    }
+
+    .star-citizen-badge img { width: 50px; height: 50px; opacity: 0.8; }
+
+    .corner-decoration {
+      position: absolute; width: 40px; height: 40px; border: 2px solid var(--citizen-blue);
+    }
+    .top-left { top: 0; left: 0; border-right: none; border-bottom: none; }
+    .top-right { top: 0; right: 0; border-left: none; border-bottom: none; }
+    .bottom-left { bottom: 0; left: 0; border-right: none; border-top: none; }
+    .bottom-right { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+    @keyframes flicker {
+      0% { opacity: 0.9; }
+      100% { opacity: 1; }
+    }
+
+    .glitch { animation: flicker 0.1s infinite alternate; }
+
+  </style>
+</head>
+<body>
+
+  <canvas id="matrix-canvas"></canvas>
+
+  <div class="admin-hud">
+    <!-- HUD Header -->
+    <div class="hud-header glitch">
+      <div><i class="fas fa-microchip"></i> SENTRY v2.5.0.9 // ADMIN PANEL</div>
+      <div id="clock">09:30:00 </div>
+      <div><i class="fas fa-wifi"></i> SECURE_CONNECTION // UEE_COMMS_STATION</div>
+    </div>
+
+    <!-- Left Panel: Diagnostics -->
+    <div class="panel ship-status">
+      <h3 class="citizen-blue">Sentry Diagnostics</h3>
+      <div class="status-item"><span>Status</span><span style="color:var(--success)">ONLINE</span></div>
+      <div class="status-item"><span>LLM Core</span><span class="citizen-blue">LM_STUDIO_RAG</span></div>
+      <div class="status-item"><span>Vision Core</span><span class="citizen-blue">OPENCV_SENTRY_v1</span></div>
+      <div class="status-item"><span>DB Status</span><span>ACTIVE_98%</span></div>
+      
+      <h3 class="citizen-blue" style="margin-top:20px;">Hobby: Star Citizen</h3>
+      <div class="status-item"><span>Org Membership</span><span>UEE_LOYALIST</span></div>
+      <div class="status-item"><span>Fleet Capacity</span><span>3 SHIPS</span></div>
+      <div class="status-item"><span>Current Sector</span><span>Stanton_III_Hurston</span></div>
+      
+      <div class="star-citizen-badge">
+        <i class="fas fa-rocket fa-2x citizen-blue"></i>
+        <div>
+          <strong class="citizen-blue">Space Marshal</strong><br>
+          <small>Star Citizen // TrainedManMonkey</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Center Panel: Matrix Logs -->
+    <div class="panel main-terminal">
+      <h3>Active Logs (Override Mode)</h3>
+      <div class="log-content" id="logLines">
+        <div class="log-line"><span>[09:05:45]</span> Initializing Admin Override...</div>
+        <div class="log-line"><span>[09:05:46]</span> Authenticating biometric token...</div>
+        <div class="log-line"><span>[09:05:47]</span> ACCESS GRANTED: Larry Mumford.</div>
+        <div class="log-line"><span>[09:05:48]</span> Synchronizing Star Citizen Fleet Data...</div>
+        <div class="log-line"><span>[09:05:50]</span> Loading encrypted school records...</div>
+        <div class="log-line"><span>[09:06:01]</span> All Sentry nodes active. Monitoring ongoing...</div>
+      </div>
+    </div>
+
+    <!-- Right Panel: Data Summary -->
+    <div class="panel">
+      <h3 class="citizen-blue">Secure Files</h3>
+      <ul style="list-style:none; line-height:2.5;">
+        <li><i class="fas fa-file-pdf"></i> Resume_Full_v3.pdf</li>
+        <li><i class="fas fa-database"></i> Training_Data_Faces.db</li>
+        <li><i class="fas fa-code"></i> private_repo_sentry.git</li>
+        <li><i class="fas fa-user-graduate"></i> Academic_Transcripts.pdf</li>
+      </ul>
+      
+      <h3 class="citizen-blue" style="margin-top:30px;">Notes</h3>
+      <p style="font-size:0.8rem; opacity:0.8;">Sentry is currently deployed in local mode. All camera feeds are processed via local RAG to ensure zero-data leaks to external servers.</p>
+    </div>
+  </div>
+
+  <script>
+    // Matrix Rain Effect
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ日月火水木金土ABCDEF".split("");
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function draw() {
+      ctx.fillStyle = 'rgba(2, 6, 23, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#0f0';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 33);
+    setInterval(() => {
+      document.getElementById('clock').textContent = new Date().toLocaleTimeString();
+    }, 1000);
+
+    // Auto log generator
+    const logContent = document.getElementById('logLines');
+    const messages = [
+      "Pinging UEE Comms...",
+      "Ship status: Carrack #12A docked.",
+      "Object detection sequence initiated...",
+      "New schedule learned by Sentry AI.",
+      "Camera node #3 reporting optimal signal.",
+      "Encryption keys rotated.",
+      "Quantum drive ready."
+    ];
+    setInterval(() => {
+      const line = document.createElement('div');
+      line.className = 'log-line';
+      line.innerHTML = `<span>[${new Date().toLocaleTimeString()}]</span> ${messages[Math.floor(Math.random() * messages.length)]}`;
+      logContent.appendChild(line);
+      logContent.scrollTop = logContent.scrollHeight;
+    }, 4000);
+
+  </script>
+</body>
+</html>

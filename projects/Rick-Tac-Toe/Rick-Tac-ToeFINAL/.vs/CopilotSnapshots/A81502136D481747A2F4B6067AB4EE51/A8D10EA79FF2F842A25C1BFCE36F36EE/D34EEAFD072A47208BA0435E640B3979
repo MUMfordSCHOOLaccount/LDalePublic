@@ -1,0 +1,63 @@
+﻿using System;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
+
+namespace CSC240_ProjectTicTacToe_LDM
+{
+    public partial class ExitScreen : Form
+    {
+        private int countdown = 10;
+
+        public ExitScreen()
+        {
+            InitializeComponent();
+        }
+
+        private void ExitScreen_Load(object sender, EventArgs e)
+        {
+            // Load exit image (placeholder path - user will provide image)
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string exitImagePath = Path.Combine(basePath, "Resources", "Exit.jpg");
+
+            if (File.Exists(exitImagePath))
+            {
+                picExitImage.Image = Image.FromFile(exitImagePath);
+            }
+            else
+            {
+                // Placeholder styling if no image
+                picExitImage.BackColor = Color.DarkSlateGray;
+            }
+
+            // Hide countdown and goodbye labels since image has text
+            lblGoodbye.Visible = false;
+            lblCountdown.Visible = false;
+
+            // Start countdown
+            countdown = 10;
+            exitTimer.Start();
+
+            // Allow clicking to exit immediately
+            this.Click += (s, ev) => CloseApplication();
+            picExitImage.Click += (s, ev) => CloseApplication();
+        }
+
+        private void exitTimer_Tick(object sender, EventArgs e)
+        {
+            countdown--;
+
+            if (countdown <= 0)
+            {
+                exitTimer.Stop();
+                CloseApplication();
+            }
+        }
+
+        private void CloseApplication()
+        {
+            exitTimer.Stop();
+            Application.Exit();
+        }
+    }
+}

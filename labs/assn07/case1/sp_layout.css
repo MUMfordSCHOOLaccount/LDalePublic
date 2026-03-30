@@ -1,0 +1,117 @@
+@charset "utf-8";
+
+/*
+   New Perspectives on HTML5 and CSS3, 7th Edition
+   Tutorial 3
+   Case Problem 1
+   
+   Layout styles for Slate and Pencil Tutoring
+   Author: Larry Mumford
+   Date:   11/16/2025
+   
+   Filename: sp_layout.css
+
+*/
+
+/* Window and Body Styles */
+
+html {
+   height: 100%;
+}
+
+body {
+   width: 95%;
+   min-width: 640px;
+   max-width: 960px;
+   margin-left: auto;
+   margin-right: auto;
+   min-height: 100%;
+}
+
+img {
+   display: block;
+}
+
+/* CSS Grid Styles */
+
+body {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+/* Row Styles */
+
+.row {
+   grid-column: 1 / span 4;
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+/* Page Header Styles */
+
+header.row > img#logo {
+   grid-column: 1 / span 3;
+   width: 100%;
+}
+
+/* Horizontal Navigation List Styles */
+
+nav.horizontalNavigation li {
+   display: block;
+   width: 12.5%;
+   float: left;
+}
+
+/* Topics Styles */
+
+ul#topics img {
+   width: 50%;
+   margin: 0 auto;
+}
+
+ul#topics p {
+   width: 70%;
+   margin: 0 auto;
+}
+
+/* HR Styles */
+
+hr {
+   grid-column: 1 / span 4;
+}
+
+/* Customer Comment Styles */
+
+ul#comments {
+   grid-column: 1 / span 4;
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+}
+
+ul#comments > li {
+   width: 75%;
+   padding-bottom: 30px;
+}
+
+ul#comments > li:nth-of-type(odd) {
+   justify-self: end;
+}
+
+ul#comments > li img {
+   float: left;
+   width: 20%;
+}
+
+ul#comments > li p {
+   float: left;
+   width: 75%;
+   margin-left: 5%;
+}
+
+/* Footer Styles */
+
+footer {
+   grid-column: 1 / span 4;
+}
+
+

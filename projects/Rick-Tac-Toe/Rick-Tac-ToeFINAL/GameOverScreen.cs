@@ -1,0 +1,105 @@
+using System;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
+
+namespace CSC240_ProjectTicTacToe_LDM
+{
+    public partial class GameOverScreen : Form
+    {
+        public enum GameResult
+        {
+            Player1Wins,
+            Player2Wins,
+            CPUWins,
+            Draw
+        }
+
+        public bool PlayAgain { get; private set; } = false;
+        public bool ExitGame { get; private set; } = false;
+
+        private GameResult result;
+        private string winnerName;
+
+        public GameOverScreen(GameResult gameResult, string winner = "")
+        {
+            InitializeComponent();
+            this.result = gameResult;
+            this.winnerName = winner;
+        }
+
+        private void GameOverScreen_Load(object sender, EventArgs e)
+        {
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string imagePath = "";
+
+            // Determine which image to show based on result
+            switch (result)
+            {
+                case GameResult.Player1Wins:
+                case GameResult.Player2Wins:
+                    imagePath = Path.Combine(basePath, "Resources", "Winner.jpg");
+                    lblResult.Text = $"{winnerName} WINS!";
+                    lblResult.ForeColor = Color.Gold;
+                    break;
+                case GameResult.CPUWins:
+                    imagePath = Path.Combine(basePath, "Resources", "Loser.jpg");
+                    lblResult.Text = "CPU WINS!";
+                    lblResult.ForeColor = Color.Red;
+                    break;
+                case GameResult.Draw:
+                    imagePath = Path.Combine(basePath, "Resources", "Winner.jpg"); // Use winner image for draw too
+                    lblResult.Text = "IT'S A DRAW!";
+                    lblResult.ForeColor = Color.Cyan;
+                    break;
+            }
+
+            // Load the appropriate image
+            if (File.Exists(imagePath))
+            {
+                picResultImage.Image = Image.FromFile(imagePath);
+            }
+            else
+            {
+                // Placeholder color if image not found
+                picResultImage.BackColor = (result == GameResult.CPUWins) ? Color.DarkRed : Color.DarkGreen;
+            }
+
+            // Start timer to show buttons after 20 seconds
+            resultTimer.Start();
+
+            // Allow clicking image to skip to buttons
+            picResultImage.Click += (s, ev) => ShowButtons();
+        }
+
+        private void resultTimer_Tick(object sender, EventArgs e)
+        {
+            resultTimer.Stop();
+            ShowButtons();
+        }
+
+        private void ShowButtons()
+        {
+            resultTimer.Stop();
+            picResultImage.Visible = false;
+            pnlButtons.Visible = true;
+            pnlButtons.BringToFront();
+        }
+
+        private void btnPlayAgain_Click(object sender, EventArgs e)
+        {
+            PlayAgain = true;
+            ExitGame = false;
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            PlayAgain = false;
+            ExitGame = true;
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+    }
+}

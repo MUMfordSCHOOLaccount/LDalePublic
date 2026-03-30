@@ -1,29 +1,221 @@
-<!doctype html>
-<!--
-  Author: Larry Mumford
-  Date Completed: 12/16/2025
-  Required Files: ../finalExam/finalExam.html (redirect target)
-  Description: Final Exam for Fall 2025 Quarter — redirect helper
--->
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="refresh" content="0; url=/ForSchool/ASSN_webfolder/finalExam/finalExam.html">
-    <title>Redirecting to Final Exam…</title>
-    <link rel="canonical" href="https://mumfordschoolaccount.github.io/ForSchool/ASSN_webfolder/finalExam/finalExam.html">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 24px; }
-      a { color: #0ea5e9; }
-    </style>
-    <script>
-      // Fallback in case meta refresh is blocked
-      (function(){
-        try { window.location.replace('/ForSchool/ASSN_webfolder/finalExam/finalExam.html'); } catch(e) {}
-      })();
-    </script>
-  </head>
-  <body>
-    <p>Redirecting to <a href="/ForSchool/ASSN_webfolder/finalExam/finalExam.html">Final Exam</a>…</p>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Larry Mumford | IT Portfolio</title>
+  
+  <!-- Modern Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Background Blobs -->
+  <div class="blob" style="top: 10%; left: 10%;"></div>
+  <div class="blob" style="top: 50%; right: 5%;"></div>
+  <div class="blob" style="bottom: 15%; left: 30%;"></div>
+
+  <!-- Crazy Spotlight & Scanner Mode -->
+  <div class="spotlight-reveal-overlay" id="spotlightOverlay"></div>
+
+  <!-- Theme Toggle -->
+  <div class="theme-switch-wrapper">
+    <label class="theme-switch" for="checkbox">
+      <input type="checkbox" id="checkbox" />
+      <div class="slider round">
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-moon"></i>
+      </div>
+    </label>
+    <span class="mode-label">SCANNER MODE</span>
+  </div>
+
+  <header>
+    <!-- The Hidden Vault & Keypad (Only scannable in Dark Mode) -->
+    <div class="vault-tunnel-container" id="vaultContainer">
+      <div class="vault-door" style="background-image: url('images/vault_door.png');">
+        <div class="keypad glass" id="keypad">
+          <div class="keypad-display" id="keypadDisplay">ACCESS CODE</div>
+          <div class="keypad-grid">
+            <button class="key" type="button">1</button><button class="key" type="button">2</button><button class="key" type="button">3</button>
+            <button class="key" type="button">4</button><button class="key" type="button">5</button><button class="key" type="button">6</button>
+            <button class="key" type="button">7</button><button class="key" type="button">8</button><button class="key" type="button">9</button>
+            <button class="key action-key" id="clearBtn">C</button><button class="key" type="button">0</button>
+            <button class="key action-key" id="enterBtn"><i class="fas fa-sign-in-alt"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container hero-content">
+      <div class="hero-portrait-wrapper">
+        <img src="images/profile.png" alt="Larry Mumford and his Wife" class="hero-portrait">
+      </div>
+      <h1 class="hero-title">Larry Mumford</h1>
+      <p class="hero-subtitle">Information Technology Specialist • Sullivan University</p>
+      
+      <div class="cta-group">
+        <a href="docs/LDaleMumford_IT_Resume.pdf" class="btn btn-primary" download>
+          <i class="fas fa-file-download"></i> Download Resume
+        </a>
+        <a href="https://g.dev/tRainManMonkey" target="_blank" class="btn btn-outline" rel="noopener">
+          <i class="fab fa-google"></i> Google Dev Profile
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <!-- Advanced Projects Section -->
+    <section>
+      <span class="section-label">Advanced AI & Development</span>
+      <h2 class="section-title">Personal Technical Projects</h2>
+      
+      <div class="portfolio-grid">
+        <!-- Missy Art Gallery -->
+        <div class="project-card glass reveal" data-screenshot="images/missyart.png">
+          <div class="project-tag">Recently Finished</div>
+          <h3 class="project-name">Missy Art Gallery</h3>
+          <p class="project-description">A high-end art gallery website featuring a custom-built color-reveal canvas engine. This is a personal technical project showcasing advanced JS implementation.</p>
+          <a href="projects/Mombest/index.html" class="btn btn-outline btn-sm">Enter Gallery</a>
+        </div>
+
+        <!-- Sentry AI -->
+        <div class="project-card glass reveal" data-screenshot="https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80&w=350&h=250">
+          <div class="project-tag">In Development</div>
+          <h3 class="project-name">Sentry AI (Text)</h3>
+          <p class="project-description">An AI-powered camera monitoring system. It learns household faces, schedules, and sends text notifications when anomalies occur. Integrates with local LLMs.</p>
+        </div>
+
+        <!-- Sentry Voice -->
+        <div class="project-card glass reveal" data-screenshot="https://images.unsplash.com/photo-1589254065878-42c9da997008?auto=format&fit=crop&q=80&w=350&h=250">
+          <div class="project-tag">In Development</div>
+          <h3 class="project-name">Sentry Voice</h3>
+          <p class="project-description">Voice-enabled security monitoring. Ask Sentry who is in the house, check schedules, and get audio alerts for suspicious camera activity.</p>
+        </div>
+
+        <!-- Android Game -->
+        <div class="project-card glass reveal" data-screenshot="https://images.unsplash.com/photo-1551103788-33230a13346d?auto=format&fit=crop&q=80&w=350&h=250">
+          <div class="project-tag">Coming Soon</div>
+          <h3 class="project-name">Mobile Android Game</h3>
+          <p class="project-description">An upcoming mobile game built for the Android platform. Focusing on performance, engaging mechanics, and cross-device optimization.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- School Projects Section -->
+    <section>
+      <span class="section-label">Academic Portfolio</span>
+      <h2 class="section-title">School Projects & Labs</h2>
+      
+      <div class="portfolio-grid">
+        <!-- Curbside Thai -->
+        <div class="project-card glass reveal" data-screenshot="labs/finalExam/images/curbside_thai.png">
+          <div class="project-tag">HTML/CSS Layout</div>
+          <h3 class="project-name">Curbside Thai</h3>
+          <p class="project-description">Standard multi-section restaurant page using semantic HTML and custom CSS architecture.</p>
+          <a href="labs/assn01/tutorial/ct_start.html" class="btn btn-outline btn-sm">View Lab</a>
+        </div>
+
+        <!-- Mobile Panini -->
+        <div class="project-card glass reveal" data-screenshot="labs/finalExam/images/MP_home.png">
+          <div class="project-tag">Responsive Flow</div>
+          <h3 class="project-name">Mobile Panini</h3>
+          <p class="project-description">Multi-page design for a food truck service, implementing consistent nav and content structure.</p>
+          <a href="labs/assn03/review/mp_index.html" class="btn btn-outline btn-sm">View Lab</a>
+        </div>
+
+        <!-- Jedd's Tree Service -->
+        <div class="project-card glass reveal" data-screenshot="labs/finalExam/images/jtc_home.png">
+          <div class="project-tag">Portfolio Design</div>
+          <h3 class="project-name">Jedd’s Tree Service</h3>
+          <p class="project-description">A service-based business layout showcasing structured service lists and professional branding.</p>
+          <a href="labs/assn04/case1/jtc_index.html" class="btn btn-outline btn-sm">View Lab</a>
+        </div>
+
+        <!-- Golden Pulps -->
+        <div class="project-card glass reveal" data-screenshot="labs/finalExam/images/gp_cover_thumbnail.png">
+          <div class="project-tag">Advanced Styling</div>
+          <h3 class="project-name">Golden Pulps</h3>
+          <p class="project-description">Complex visual layout using CSS overlays and creative image positioning for a digital magazine.</p>
+          <a href="labs/assn09/html05/case1/gp_cover.html" class="btn btn-outline btn-sm">View Lab</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Academic Achievements -->
+    <section>
+      <span class="section-label">Academic Excellence</span>
+      <h2 class="section-title">Certifications & Honors</h2>
+      
+      <div class="certificate-grid reveal">
+        <div class="cert-card glass">
+          <i class="fas fa-award cert-icon"></i>
+          <h3>Dean's List</h3>
+          <p>Fall 2025</p>
+          <a href="docs/MumfordDeansListFall25.pdf" target="_blank" class="btn btn-outline btn-sm">View Certificate</a>
+        </div>
+        <div class="cert-card glass">
+          <i class="fas fa-award cert-icon"></i>
+          <h3>Dean's List</h3>
+          <p>Summer 2025</p>
+          <a href="docs/MumfordDeansListSum25.pdf" target="_blank" class="btn btn-outline btn-sm">View Certificate</a>
+        </div>
+        <div class="cert-card glass">
+          <i class="fas fa-award cert-icon"></i>
+          <h3>Dean's List</h3>
+          <p>Spring 2025</p>
+          <a href="docs/MumfordDeansListSpr25.pdf" target="_blank" class="btn btn-outline btn-sm">View Certificate</a>
+        </div>
+        <div class="cert-card glass">
+          <i class="fas fa-award cert-icon"></i>
+          <h3>Dean's List</h3>
+          <p>Fall 2024</p>
+          <a href="docs/MumfordDeansListFall24.pdf" target="_blank" class="btn btn-outline btn-sm">View Certificate</a>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 4rem;">
+        <p class="hero-subtitle">GPA: 3.83 | Graduation Scheduled for Sept 2026</p>
+      </div>
+    </section>
+
+    <!-- Extras Section -->
+    <section>
+      <span class="section-label">Extras</span>
+      <h2 class="section-title">Games & Development</h2>
+      
+      <div class="portfolio-grid">
+        <div class="project-card glass reveal">
+          <div class="project-tag">Desktop Game</div>
+          <h3 class="project-name">Rick-Tac-Toe</h3>
+          <p class="project-description">A custom-built game written during development explorations. Ready for offline play.</p>
+          <a href="projects/Rick-Tac-Toe.7z" class="btn btn-primary" download>Download Game (.7z)</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Larry Mumford • IT Candidate Portfolio</p>
+      <div style="margin-top: 1rem; opacity: 0.5; font-size: 0.75rem;">
+        <a href="mailto:Lmumfo3853@my.sullivan.edu" style="color: inherit; text-decoration: none;">Lmumfo3853@my.sullivan.edu</a>
+        <span style="margin-left: 20px;">BUILD: v2.6.0.9</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/scripts.js"></script>
+</body>
 </html>

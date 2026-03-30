@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>My Personal Website - Larry Mumford</title>
+    <link rel="stylesheet" href="personal_website.css" />
+    <style>
+        /* Global styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+            background: url('Spacescape.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* Galaxy background with stars */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.8) 0%, transparent 70%), 
+                        radial-gradient(ellipse at bottom right, #ffeb3b, #4a90e2),
+                        radial-gradient(ellipse at top left, #6ecda0, #1a2980);
+            z-index: -1;
+        }
+
+        /* Header section */
+        .header-container {
+            width: 100%;
+            max-width: 850px;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .header-container:hover {
+            transform: translateY(-8px);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            padding: 40px;
+            gap: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid #ffeb3b;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .header-photo:hover {
+            transform: scale(1.05);
+        }
+
+        .header-info h1 {
+            font-size: 2.8em;
+            margin: 0 0 10px 0;
+            color: #ffffff;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .header-info h3 {
+            font-size: 1.5em;
+            margin: 8px 0;
+            opacity: 0.95;
+            color: #ffffff;
+        }
+
+        .header-info p {
+            font-size: 1.2em;
+            margin: 6px 0;
+            color: #ffffff;
+        }
+
+        /* Video section */
+        .video-section {
+            width: 100%;
+            max-width: 850px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            margin-bottom: 40px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        /* YouTube embed */
+        .youtube-embed {
+            width: 100%;
+            height: 100%;
+            border: none;
+            object-fit: cover;
+        }
+
+        .video-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+            color: white;
+        }
+
+        .video-info p {
+            margin-top: 15px;
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        /* Portfolio section */
+        .portfolio-container {
+            width: 100%;
+            max-width: 850px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .portfolio-title {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #ffffff;
+            text-align: center;
+            opacity: 0.95;
+        }
+
+        /* Assignment cards */
+        .assignment-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            margin-bottom: 20px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .assignment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .assignment-title {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #ffffff;
+            opacity: 0.95;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .assignment-list ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .assignment-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            gap: 10px;
+        }
+
+        .assignment-list a {
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-bottom: 4px;
+        }
+
+        .assignment-list a:hover {
+            color: #ffeb3b;
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .thumbnail {
+            width: 100px;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-left: 15px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0; /* Hidden by default */
+        }
+
+        /* Show thumbnail on hover */
+        .assignment-list a {
+    color: #4a90e2;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 4px;
+}
+
+.assignment-list a:hover {
+    color: #ffeb3b;
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.2);
+}
+        
+
+        /* Dark mode toggle */
+        #dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            z-index: 1000;
+            transition: background 0.3s ease;
+        }
+
+        #dark-mode-toggle:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .header-info h1 {
+                font-size: 2.3em;
+            }
+
+            .video-container {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-photo {
+                width: 150px;
+                height: 150px;
+            }
+
+            .assignment-list a {
+                font-size: 0.9em;
+            }
+
+            .thumbnail {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-left: 15px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0; /* Hidden by default */
+}
+
+/* Show thumbnail on hover */
+.assignment-list li:hover .thumbnail {
+    opacity: 1;
+    transform: scale(1.05);
+}
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dark mode toggle -->
+    <button id="dark-mode-toggle">🌙</button>
+
+    <!-- Header Section -->
+    <div class="header-container">
+        <div class="header-content">
+            <img src="LarryMumford1.jpg" alt="A picture of Larry Mumford" class="header-photo" />
+            <div class="header-info">
+                <h1>Larry Mumford</h1>
+                <h3>Major at Sullivan: Information Technology</h3>
+                <p>Years until graduation: 1 year</p>
+                <p>Email:
+                    <a href="mailto:Lmumfo3853@my.sullivan.edu">Lmumfo3853@my.sullivan.edu</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+  <!-- Video Section -->
+<section class="video-section">
+    <div class="video-container">
+        <!-- YouTube embed -->
+        <iframe 
+            width="100%" 
+            height="250" 
+            src="https://www.youtube.com/embed/nWm_OhIKms8?si=raAajxgMaGSfpDO1" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin" 
+            allowfullscreen>
+        </iframe>
+        <div class="video-info">
+            <p>🎥 What is Star Citizen? The Definitive Guide in 2025</p>
+            <p style="font-size: 0.9em; opacity: 0.9;">(Click to watch on YouTube)</p>
+        </div>
+    </div>
+</section>
+<!-- Portfolio Section -->
+<section class="portfolio-container">
+    <h2 class="portfolio-title">My Projects & Assignments</h2>
+    <article>
+        <!-- All assignment cards go here -->
+        <div class="assignment-card">
+            <div class="assignment-title"><strong>Something Fun</strong></div>
+            <ul>
+                <li>
+                    <a href="https://www.youtube.com/watch?v=NJIT61vxv78" target="_blank">What is Star Citizen? The Definitive Guide in 2025</a>
+                    <img src="https://img.youtube.com/vi/NJIT61vxv78/maxresdefault.jpg" alt="Star Citizen video preview" class="thumbnail">
+                </li>
+            </ul>
+        </div>
+
+        <!-- Assignment 1 -->
+        <div class="assignment-card">
+            <div class="assignment-title">Assignment 1 - HTML01, Tutorial 1</div>
+            <ul>
+                <li>
+                    <a href="ASSN_webfolder/assn01/tutorial/ct_about.html">Curbside Thai</a>
+                    <img src="curbside_thai.png" alt="Curbside Thai preview" class="thumbnail">
+                </li>
+            </ul>
+        </div>
+
+        <!-- Assignment 2 -->
+        <div class="assignment-card">
+            <div class="assignment-title">Assignment 2 - Your Personal Index.html</div>
+            <ul>
+                <li>
+                    <a href="ASSN_webfolder/assn02/index.html">Index Page</a>
+                    <img src="index_Html_Img.png" alt="Index Page preview" class="thumbnail">
+                </li>
+            </ul>
+        </div>
+
+        <!-- Assignment 3 -->
+        <div class="assignment-card">
+            <div class="assignment-title">Assignment 3 - HTML01 Review</div>
+            <ul>
+                <li>
+                    <a href="ASSN_webfolder/assn03/review/mp_index.html">Mobile Panini - Home</a>
+                    <img src="MP_home.png" alt="Mobile Panini Home preview" class="thumbnail">
+                </li>
+                <li>
+                    <a href="ASSN_webfolder/assn03/review/mp_menu.html">Mobile Panini - Menu</a>
+                    <img src="MP_menu.png" alt="Mobile Panini Menu preview" class="thumbnail">
+                </li>
+                <li>
+                    <a href="ASSN_webfolder/assn03/review/mp_events.html">Mobile Panini - Events</a>
+                    <img src="MP_events.png" alt="Mobile Panini Events preview" class="thumbnail">
+                </li>
+                <li>
+                    <a href="ASSN_webfolder/assn03/review/mp_catering.html">Mobile Panini - Catering</a>
+                    <img src="mp_catering.png" alt="Mobile Panini Catering preview" class="thumbnail">
+                </li>
+            </ul>
+        </div>
+
+        <!-- Assignment 4 -->
+        <div class="assignment-card">
+            <div class="assignment-title">Assignment 4 - HTML01 Case 1</div>
+            <ul>
+                <li>
+                    <a href="ASSN_webfolder/assn04/case1/jtc_index.html">J-Tip Consulting - Home</a>
+                    <img src="jtc_home.png" alt="J-Tip Consulting Home preview" class="thumbnail">
+                </li>
+                <li>
+                    <a href="ASSN_webfolder/assn04/case1/jtc_services.html">J-Tip Consulting - Services</a>
+                    <img src="jtc_services.png" alt="J-Tip Consulting Services preview" class="thumbnail">
+                </li>
+            </ul>
+        </div>
+
+        <!-- Assignment 5 -->
+        <div class="assignment-card">
+            <div class="assignment-title">Assignment 5 - HTML02 Tutorial</div>
+            <ul>
+                <li>
+                    <a href="ASSN_webfolder/assn05/tutorial/tss_home.html">Tri and Succeed Sports - Home</a>
+                    <img src="tss_home.png" alt="Tri and Succeed Sports Home preview" class="thumbnail">
+                </li>
+                <li>
+                    <a href="ASSN_webfolder/assn05/tutorial/tss_run.html">Tri and Succeed Sports - Running</a>
+                    <img src="tss_running.png" alt="Tri and Succeed Sports Running preview" class="thumbnail">
+                </li>
+                <li>
+                    <a href="ASSN_webfolder/assn05/tutorial/tss_bike.html">Tri and Succeed Sports - Biking</a>
+                    <img src="tss_biking.png" alt="Tri and Succeed Sports Biking preview" class="thumbnail">
+                </li>
+                <li>
+                    <a href="ASSN_webfolder/assn05/tutorial/tss_swim.html">Tri and Succeed Sports - Swimming</a>
+                    <img src="tss_swimming.png" alt="Tri and Succeed Sports Swimming preview" class="thumbnail">
+                </li>
+            </ul>
+        </div>
+
+        <!-- Assignment 6 -->
+        <div class="assignment-card">
+            <div class="assignment-title">Assignment 6 - HTML03 Tutorial</div>
+            <ul>
+                <li>
+                    <a href="ASSN_webfolder/assn06/tutorial/pc_home.html">Pandaisia Chocolates - Home</a>
+                    <img src="pc_home.png" alt="Pandaisia Chocolates Home preview" class="thumbnail">
+                </li>
+                <li>
+                    <a href="ASSN_webfolder/assn06/tutorial/pc_about.html">Pandaisia Chocolates - About</a>
+                    <img src="pc_about.png" alt="Pandaisia Chocolates About preview" class="thumbnail">
+                </li>
+                <li>
+                    <a href="ASSN_webfolder/assn06/tutorial/pc_info.html">Pandaisia Chocolates - Info</a>
+                    <img src="pc_info.png" alt="Pandaisia Chocolates Info preview" class="thumbnail">
+                </li>
+            </ul>
+        </div>
+
+        <!-- Assignment 7 -->
+        <div class="assignment-card">
+            <div class="assignment-title">Assignment 7 - HTML03</div>
+            <ul>
+                <li>
+                    <strong>Case 1:</strong> <a href="ASSN_webfolder/assn07/case1/sp_home.html">Slate & Pencil Tutoring</a>
+                    <img src="sp_home.png" alt="Slate & Pencil Tutoring preview" class="thumbnail">
+                </li>
+                <li>
+                    <strong>Case 3:</strong> <a href="ASSN_webfolder/assn07/case3/ss_dday.html">A Soldier's Scrapbook - D-Day</a>
+                    <img src="ss_dday_home.png" alt="A Soldier's Scrapbook D-Day preview" class="thumbnail">
+                </li>
+            </ul>
+        </div>
+
+        <!-- Assignment 8 -->
+        <div class="assignment-card">
+            <div class="assignment-title">Assignment 8 - HTML04</div>
+            <ul>
+                <li>
+                    <strong>Tutorial:</strong> <a href="index/tb_komatsu.html">Tree and Book - Komatsu Family</a>
+                    <img src="tb_komatsu.png" alt="Tree and Book Komatsu Family preview" class="thumbnail">
+                </li>
+                <li>
+                    <strong>Tutorial:</strong> <a href="index/tb_genta.html">Tree and Book - Genta Gallery</a>
+                    <img src="tb_genta1.png" alt="Tree and Book Genta Gallery preview" class="thumbnail">
+                </li>
+                <li>
+                    <strong>Case 1:</strong> <a href="ASSN_webfolder/assn08/case2/sf_torte.html">Save your Fork - Apple Torte</a>
+                    <img src="sf_tortethumbnail.png" alt="Save your Fork Apple Torte preview" class="thumbnail">
+                </li>
+            </ul>
+        </div>
+
+        <!-- Assignment 9 -->
+        <div class="assignment-card">
+            <div class="assignment-title">Assignment 9 - HTML05 & HTML06</div>
+            <ul>
+                <li>
+                    <strong>HTML05 Tutorial:</strong> <a href="ASSN_webfolder/assn09/tutorial/tf_articles.html">Trusted Friends Daycare - Articles</a>
+                    <img src="tf_articles_thumb.png" alt="Trusted Friends Daycare Articles preview" class="thumbnail">
+                </li>
+                <li>
+                    <strong>HTML05 Case 1:</strong> <a href="ASSN_webfolder/assn09/html05/case1/gp_cover.html">Golden Pulps - Cover</a>
+                    <img src="gp_cover_thumbnail.png" alt="Golden Pulps Cover preview" class="thumbnail">
+                </li>
+                <li>
+                    <strong>HTML06 Tutorial:</strong> <a href="ASSN_webfolder/assn09/html05/tutorial/dlr_evenings.html">DLR Evening Schedule</a>
+                    <img src="dlr_evenings_thumbnail.png" alt="DLR Evening Schedule preview" class="thumbnail">
+                </li>
+            </ul>
+        </div>
+
+        <!-- Assignment 10 -->
+        <div class="assignment-card">
+            <div class="assignment-title">Assignment 10 - Placeholder</div>
+            <ul>
+                <li>
+                    <a href="#">Coming Soon</a>
+                </li>
+            </ul>
+        </div>
+    </article>
+</section>

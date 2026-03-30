@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CSC230 Final Exam – Larry Mumford</title>
+    <link rel="stylesheet" href="finalExam.css">
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header" role="banner">
+        <div class="brand">
+            <img class="avatar" src="images/LarryMumford1.jpg" alt="Portrait of Larry Mumford">
+            <div>
+                <h1>CSC230 Final Exam</h1>
+                <p class="subtitle">Sullivan University • Web Design</p>
+            </div>
+        </div>
+        <nav class="top-nav" aria-label="Primary">
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#showcase">Assignments</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main" tabindex="-1">
+        <section id="about" class="section">
+            <h2>About Me</h2>
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3>Larry Mumford</h3>
+                    <p><strong>Program:</strong> Information Technology</p>
+                    <p><strong>Time to Graduation:</strong> 1 year</p>
+                    <p><strong>Email:</strong> <a href="mailto:Lmumfo3853@my.sullivan.edu">Lmumfo3853@my.sullivan.edu</a></p>
+                </div>
+                <aside class="aside-note" aria-label="Highlights">
+                    <h3>Highlights</h3>
+                    <ul>
+                        <li>Semantic HTML and responsive CSS</li>
+                        <li>Accessible navigation and skip link</li>
+                        <li>Clean, modular structure with external styles</li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
+
+        <section id="showcase" class="section">
+            <div class="section-head">
+                <h2>Course Work Showcase</h2>
+                <p class="section-desc">Browse selected assignments from the term. Each card expands to reveal links.</p>
+            </div>
+
+            <div class="cards" data-collapsible>
+                <article class="card" aria-live="polite">
+                    <button class="card-toggle" aria-expanded="false" aria-controls="a1-list">
+                        <span class="card-title">Assignment 1 • HTML01 Tutorial</span>
+                    </button>
+                    <ul id="a1-list" class="card-list" hidden>
+                        <li><a href="../assn01/tutorial/ct_about.html">Curbside Thai</a></li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <button class="card-toggle" aria-expanded="false" aria-controls="a2-list">
+                        <span class="card-title">Assignment 2 • Personal Index</span>
+                    </button>
+                    <ul id="a2-list" class="card-list" hidden>
+                        <li><a href="../assn02/index.html">Index Page</a></li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <button class="card-toggle" aria-expanded="false" aria-controls="a3-list">
+                        <span class="card-title">Assignment 3 • HTML01 Review</span>
+                    </button>
+                    <ul id="a3-list" class="card-list" hidden>
+                        <li><a href="../assn03/review/mp_index.html">Mobile Panini – Home</a></li>
+                        <li><a href="../assn03/review/mp_menu.html">Mobile Panini – Menu</a></li>
+                        <li><a href="../assn03/review/mp_events.html">Mobile Panini – Events</a></li>
+                        <li><a href="../assn03/review/mp_catering.html">Mobile Panini – Catering</a></li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <button class="card-toggle" aria-expanded="false" aria-controls="a4-list">
+                        <span class="card-title">Assignment 4 • HTML01 Case 1</span>
+                    </button>
+                    <ul id="a4-list" class="card-list" hidden>
+                        <li><a href="../assn04/case1/jtc_index.html">J‑Tip Consulting – Home</a></li>
+                        <li><a href="../assn04/case1/jtc_services.html">J‑Tip Consulting – Services</a></li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <button class="card-toggle" aria-expanded="false" aria-controls="a5-list">
+                        <span class="card-title">Assignment 5 • HTML02 Tutorial</span>
+                    </button>
+                    <ul id="a5-list" class="card-list" hidden>
+                        <li><a href="../assn05/tutorial/tss_home.html">Tri and Succeed Sports – Home</a></li>
+                        <li><a href="../assn05/tutorial/tss_run.html">Tri and Succeed Sports – Running</a></li>
+                        <li><a href="../assn05/tutorial/tss_bike.html">Tri and Succeed Sports – Biking</a></li>
+                        <li><a href="../assn05/tutorial/tss_swim.html">Tri and Succeed Sports – Swimming</a></li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <button class="card-toggle" aria-expanded="false" aria-controls="a6-list">
+                        <span class="card-title">Assignment 6 • HTML03 Tutorial</span>
+                    </button>
+                    <ul id="a6-list" class="card-list" hidden>
+                        <li><a href="../assn06/tutorial/pc_home.html">Pandaisia Chocolates – Home</a></li>
+                        <li><a href="../assn06/tutorial/pc_about.html">Pandaisia Chocolates – About</a></li>
+                        <li><a href="../assn06/tutorial/pc_info.html">Pandaisia Chocolates – Info</a></li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <button class="card-toggle" aria-expanded="false" aria-controls="a7-list">
+                        <span class="card-title">Assignment 7 • HTML03 Cases</span>
+                    </button>
+                    <ul id="a7-list" class="card-list" hidden>
+                        <li><a href="../assn07/case1/sp_home.html">Slate & Pencil Tutoring</a></li>
+                        <li><a href="../assn07/case3/ss_dday.html">A Soldier's Scrapbook – D‑Day</a></li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <button class="card-toggle" aria-expanded="false" aria-controls="a8-list">
+                        <span class="card-title">Assignment 8 • HTML04</span>
+                    </button>
+                    <ul id="a8-list" class="card-list" hidden>
+                        <li><a href="../assn08/Index/tb_komatsu.html">Tree and Book – Komatsu Family</a></li>
+                        <li><a href="../assn08/Index/tb_genta.html">Tree and Book – Genta Gallery</a></li>
+                        <li><a href="../assn08/case2/sf_torte.html">Save your Fork – Apple Torte</a></li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <button class="card-toggle" aria-expanded="false" aria-controls="a9-list">
+                        <span class="card-title">Assignment 9 • HTML05 & HTML06</span>
+                    </button>
+                    <ul id="a9-list" class="card-list" hidden>
+                        <li><a href="../assn09/tutorial/tf_articles.html">Trusted Friends Daycare – Articles</a></li>
+                        <li><a href="../assn09/html05/case1/gp_cover.html">Golden Pulps – Cover</a></li>
+                        <li><a href="../assn09/html05/tutorial/dlr_evenings.html">DLR Evening Schedule</a></li>
+                    </ul>
+                </article>
+
+                <article class="card">
+                    <button class="card-toggle" aria-expanded="false" aria-controls="a10-list">
+                        <span class="card-title">Assignment 10 • HTML07 & HTML06</span>
+                    </button>
+                    <ul id="a10-list" class="card-list" hidden>
+                        <li><a href="../assn10/tutorial/rb_survey.html">Red Ball Pizza – Customer Survey</a></li>
+                        <li><a href="../assn10/case1/mi_pricing.html">Marlin Internet – Pricing</a></li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <h2>Contact</h2>
+            <p>Questions about this portfolio? Email <a href="mailto:Lmumfo3853@my.sullivan.edu">Lmumfo3853@my.sullivan.edu</a>.</p>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2025 Larry Mumford • CSC230 Web Design • Final Exam</p>
+    </footer>
+
+    <script src="finalExam.js" defer></script>
+</body>
+</html>

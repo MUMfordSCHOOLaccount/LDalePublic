@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Missy Art</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="scrollable">
+
+    <div class="page-container">
+        <main class="main-content">
+            <!-- Gallery Content -->
+            <div class="gallery-container">
+                <div id="gallery-grid">
+                    <!-- Images will be loaded here by JavaScript -->
+                </div>
+                <button id="load-more-btn">Load More</button>
+            </div>
+        </main>
+
+        <!-- Desktop Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="draw.html">Draw</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <h1>Gallery</h1>
+        </aside>
+    </div>
+
+    <nav class="mobile-nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="draw.html">Draw</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <!-- Lightbox Structure (remains outside the main layout) -->
+    <div id="lightbox-overlay">
+        <span id="close-lightbox">&times;</span>
+        <img id="lightbox-image" src="" alt="Enlarged gallery view">
+        <div id="lightbox-caption"></div>
+    </div>
+
+    <!-- Local Gallery Data -->
+    <script src="assets/gallery-data.js"></script>
+    <script src="assets/gallery.js"></script>
+
+</body>
+</html>
