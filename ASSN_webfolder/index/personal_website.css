@@ -1,0 +1,50 @@
+/* Add this to personal_website.css */
+
+body {
+    background: url('Spacescape.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Galaxy background with stars */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.8) 0%, transparent 70%), 
+                radial-gradient(ellipse at bottom right, #ffeb3b, #4a90e2),
+                radial-gradient(ellipse at top left, #6ecda0, #1a2980);
+    z-index: -1;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #121212 !important;
+}
+
+body.dark-mode .header-container,
+body.dark-mode .video-section,
+body.dark-mode .portfolio-container {
+    background: rgba(30, 30, 30, 0.8) !important;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-mode .header-content,
+body.dark-mode .video-info {
+    background: rgba(40, 40, 40, 0.8) !important;
+}
+
+/* Text colors in dark mode */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode p,
+body.dark-mode a {
+    color: white !important;
+}
+
+body.dark-mode .assignment-title,
+body.dark-mode .header-info h3 {
+    opacity: 0.95;
+}
