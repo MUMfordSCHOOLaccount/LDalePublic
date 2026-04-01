@@ -124,6 +124,21 @@
 
     .glitch { animation: flicker 0.1s infinite alternate; }
 
+    .referral-btn {
+      color: var(--citizen-blue);
+      text-decoration: none;
+      padding: 8px 12px;
+      border: 1px solid var(--citizen-blue);
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      background: rgba(0, 210, 255, 0.1);
+    }
+
+    .referral-btn:hover {
+      background: var(--citizen-blue);
+      color: var(--bg-dark);
+      box-shadow: 0 0 15px var(--citizen-blue);
+    }
   </style>
 </head>
 <body>
@@ -149,14 +164,17 @@
       <h3 class="citizen-blue" style="margin-top:20px;">Hobby: Star Citizen</h3>
       <div class="status-item"><span>Org Membership</span><span>UEE_LOYALIST</span></div>
       <div class="status-item"><span>Fleet Capacity</span><span>3 SHIPS</span></div>
-      <div class="status-item"><span>Current Sector</span><span>Stanton_III_Hurston</span></div>
+      <div class="status-item"><span>Referral Code</span><span class="citizen-blue" style="font-weight:bold;">STAR-F3NN-QLL6</span></div>
       
       <div class="star-citizen-badge">
         <i class="fas fa-rocket fa-2x citizen-blue"></i>
-        <div>
+        <div style="flex:1;">
           <strong class="citizen-blue">Space Marshal</strong><br>
           <small>Star Citizen // TrainedManMonkey</small>
         </div>
+        <a href="https://www.robertsspaceindustries.com/enlist?referral=STAR-F3NN-QLL6" target="_blank" class="referral-btn" title="Get 5,000 UEC Starting Credits">
+          <i class="fas fa-user-plus"></i>
+        </a>
       </div>
     </div>
 
